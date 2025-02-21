@@ -2,20 +2,24 @@ import { useEffect, useState } from "react";
 import "./App.scss";
 
 function App() {
-  const [buttonSelected, setButtonSelected] = useState<null | string>(null);
   const buttons = ["Fuck", "Marry", "Kill"];
+
+  const [selectedPairs, setSelectedPairs] = useState<{ action: string; imageIndex: number }[]>([]);
   const [randomPhotoSelected, setRandomPhotoSelected] = useState<number[]>([]);
-  const [bgImages, setBgImages] = useState<string[]>(["", "", ""]); // מערך רקעים לכל כרטיס
-  const [resultText, setResultText] = useState<string>(""); // שמירת הטקסט
+  const [bgImages, setBgImages] = useState<string[]>(["", "", ""]);
+  const [disabledButtons, setDisabledButtons] = useState<boolean[]>([false, false, false]);
+  const [resultText, setResultText] = useState<string>("");
 
   const src = `/images/arielPhoto`;
+
   const resetGame = () => {
-    setBgImages(["", "", ""])
-    setButtonSelected(null)
-    setResultText('')
-    console.log(buttonSelected)
-    setRandomPhotoSelected([])
-  }
+    setBgImages(["", "", ""]);
+    setSelectedPairs([]);
+    setRandomPhotoSelected([]);
+    setDisabledButtons([false, false, false]);
+    setResultText("");
+  };
+
   const getRandomImage = (max: number) => {
     let randomNumber;
     do {
@@ -25,29 +29,25 @@ function App() {
     return randomNumber;
   };
 
-
   useEffect(() => {
-    if (randomPhotoSelected.length === 3) {
+    if (selectedPairs.length === 3) {
       const translateText: Record<number, string> = {
         2: "flounder",
         3: "prince eric",
         4: "sebastian",
         5: "seagull",
-        6: "ursula ",
+        6: "ursula",
         7: "King Triton",
       };
-  
-      // קבלת הערך המתאים
-      const firstSelection1 = translateText[randomPhotoSelected[0] + 1] || "Unknown";
-      const firstSelection2 = translateText[randomPhotoSelected[1] + 1 ]|| "Unknown";
-      const firstSelection3 = translateText[randomPhotoSelected[2]+ 1] || "Unknown";
-  
-      const text = `You Fucked the ${firstSelection1} , Married ${firstSelection2} and Kill the ${firstSelection3}`;
-      console.log(text); // אפשר להדפיס לקונסול לבדיקה
-      setResultText(text); // עדכון state כדי להציג את התוצאה
+
+      // יצירת טקסט מסודר לפי סדר הלחיצות
+      const resultString = selectedPairs
+        .map(({ action, imageIndex }) => `${action} the ${translateText[imageIndex + 1] || "Unknown"}`)
+        .join(", ");
+
+      setResultText(`You ${resultString}`);
     }
-    console.log("🚀 ~ useEffect ~ randomPhotoSelected:", randomPhotoSelected)
-  }, [randomPhotoSelected]);
+  }, [selectedPairs]);
 
   return (
     <section className="main-section">
@@ -61,17 +61,24 @@ function App() {
           {buttons.map((buttonName: string, idx: number) => (
             <div className="card-container" key={idx}>
               <button
+                disabled={disabledButtons[idx]}
                 onClick={() => {
-                  setButtonSelected(buttonName);
-                  if (randomPhotoSelected.length < 3) {
+                  if (selectedPairs.length < 3) {
                     const randomNumber = getRandomImage(6);
+
+                    setSelectedPairs([...selectedPairs, { action: buttonName, imageIndex: randomNumber }]);
                     setRandomPhotoSelected([...randomPhotoSelected, randomNumber]);
 
-                    // עדכון רקע של הכרטיס המתאים בלבד
                     setBgImages((prevImages) => {
                       const newImages = [...prevImages];
-                      newImages[idx] = `${src}${randomNumber + 1}.png`;
+                      newImages[selectedPairs.length] = `${src}${randomNumber + 1}.png`;
                       return newImages;
+                    });
+
+                    setDisabledButtons((prev) => {
+                      const newDisabled = [...prev];
+                      newDisabled[idx] = true;
+                      return newDisabled;
                     });
                   }
                 }}
@@ -81,22 +88,16 @@ function App() {
               <div
                 className="card-image"
                 style={{
-                  backgroundImage: `url("${bgImages[idx]}")`,
+                  backgroundImage: `url("${bgImages[selectedPairs.findIndex((b) => b.action === buttonName)]}")`,
                 }}
               ></div>
-        
             </div>
-            
           ))}
         </div>
         <div className="reset-game-container">
-                 <h3>{resultText}</h3>
-                <button 
-                onClick={()=>{
-                  resetGame()
-                }}
-                >Start Again</button>
-              </div>
+          <h3>{resultText}</h3>
+          <button onClick={resetGame}>Start Again</button>
+        </div>
       </div>
     </section>
   );
