@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.scss";
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
   const [magicWord, setMagicWord] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const correctMagicWord = "ראובן המלאך" 
+  const correctMagicWord = "Ariel";
 
   const buttons = ["Fuck", "Marry", "Kill"];
 
@@ -17,6 +17,16 @@ function App() {
   const [resultText, setResultText] = useState<string>("");
 
   const src = `/images/arielPhoto`;
+
+  // 🔊 רפרנס לאודיו
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioSrc = "/sounds/mainmusicMp3.mp3"; // קובץ הסאונד של תחילת המשחק
+
+  const playSound = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
 
   const resetGame = () => {
     setBgImages(["", "", ""]);
@@ -58,6 +68,7 @@ function App() {
     if (magicWord.trim().toLowerCase() === correctMagicWord.toLowerCase()) {
       setIsGameStarted(true);
       setErrorMessage("");
+      playSound(); // 🔊 הפעלת הסאונד עם תחילת המשחק
     } else {
       setErrorMessage("טפיי עליך, זאת לא אריאל!");
     }
@@ -129,6 +140,9 @@ function App() {
           </div>
         </>
       )}
+
+      {/* 🔊 אלמנט אודיו מוסתר להפעלת הסאונד בתחילת המשחק */}
+      <audio ref={audioRef} src={audioSrc} />
     </section>
   );
 }
