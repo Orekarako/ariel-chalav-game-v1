@@ -7,9 +7,9 @@
   color: rgb(84, 84, 212);
 }
 .main-section { 
-
   width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
   background: rgb(2,0,36);
   background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(63,63,255,1) 35%, rgba(0,212,255,1) 100%);
 }
@@ -24,6 +24,7 @@ header , .body-section{
     }
   }
   .buttons-container{
+    flex-wrap: wrap;
     width: inherit;
     display: flex;
     justify-content: center;
@@ -33,7 +34,7 @@ header , .body-section{
       border-radius: 20px;
       margin: 5px;
       font-size: 1.5rem;
-      padding: 25px 100px;
+      padding: 15px  50px;
     }
 
   }
@@ -65,6 +66,7 @@ header , .body-section{
     margin: auto;
     flex-direction: column;
     display: flex;
+    text-align: center;
     padding-top: 50px;
     justify-content: center;
     align-items: center;
@@ -86,7 +88,8 @@ header , .body-section{
 }
 
 h3 {
-  color: black !important;
+  color: rgb(255, 255, 255) !important;
+  max-width: 70%;
   font-weight: 700;
   font-size: 30px;
 }
