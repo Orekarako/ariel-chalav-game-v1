@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+* {
+  font-family: "Poppins", serif;
+  font-weight: bold;
+  color: rgb(84, 84, 212);
+}
+.main-section { 
+
+  width: 100vw;
+  height: 100vh;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(63,63,255,1) 35%, rgba(0,212,255,1) 100%);
+}
+header , .body-section{
+  width: inherit;
+  display: flex;
+  justify-content: center;
+
+  .main-image{
+    img {
+      width: 250px;
+    }
+  }
+  .buttons-container{
+    width: inherit;
+    display: flex;
+    justify-content: center;
+
+    button{
+      cursor: pointer;
+      border-radius: 20px;
+      margin: 5px;
+      font-size: 1.5rem;
+      padding: 25px 100px;
+    }
+
+  }
+}
+
+
+.body-section {
+  max-width: 100vw;
+  flex-direction: column;
+
+  .card-container {
+    min-height: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .card-image {
+      width: 250px;
+      height: 250px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      transition: background-image 0.5s ease-in-out;
+    }
+  }
+
+  .reset-game-container{
+    margin: auto;
+    flex-direction: column;
+    display: flex;
+    padding-top: 50px;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      padding: 15px 15px;
+      max-width: 150px;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: inset 0 0 15px;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background-color: cornflowerblue;
+        color: white;
+      }
+    }
+  }
+}
+
+h3 {
+  color: black !important;
+  font-weight: 700;
+  font-size: 30px;
+}
