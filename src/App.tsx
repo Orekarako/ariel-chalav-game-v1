@@ -42,7 +42,7 @@ function App() {
       const firstSelection2 = translateText[randomPhotoSelected[1] + 1 ]|| "Unknown";
       const firstSelection3 = translateText[randomPhotoSelected[2]+ 1] || "Unknown";
   
-      const text = `You Fucked at ${firstSelection1} , Marry With ${firstSelection2} and Kill at ${firstSelection3}`;
+      const text = `You Fucked the ${firstSelection1} , Married ${firstSelection2} and Kill the ${firstSelection3}`;
       console.log(text); // אפשר להדפיס לקונסול לבדיקה
       setResultText(text); // עדכון state כדי להציג את התוצאה
     }
