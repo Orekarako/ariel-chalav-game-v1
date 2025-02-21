@@ -6,7 +6,7 @@ function App() {
   const [magicWord, setMagicWord] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const correctMagicWord = "Ariel";
+  const correctMagicWord = "רוברוב המלאך";
 
   const buttons = ["Fuck", "Marry", "Kill"];
 
